@@ -1,4 +1,4 @@
-import LoginView from "../views/HomeView.vue";
+import LoginView from "../views/LoginView.vue";
 import DashboardView from "@/views/DashboardView";
 import ControleDeProdutosView from "@/views/ControleDeProdutosView";
 import ControleDeClientesView from "@/views/ControleDeClientesView";

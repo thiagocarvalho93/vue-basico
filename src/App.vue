@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Menu />
+    <Menu v-if="this.$router.currentRoute.name !== 'Login'" />
     <router-view />
   </div>
 </template>
@@ -25,6 +25,6 @@ export default {
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Roboto';
+  font-family: "Roboto";
 }
 </style>
