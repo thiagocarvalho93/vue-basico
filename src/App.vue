@@ -27,4 +27,17 @@ body {
   padding: 0;
   font-family: "Roboto";
 }
+
+.container {
+  margin-top: 15px;
+}
+
+.titulo {
+  font-family: Roboto;
+  font-weight: 500;
+}
+
+hr {
+  margin: 0;
+}
 </style>

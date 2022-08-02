@@ -1,5 +1,5 @@
 <template>
-  <ul>
+  <ul class="menu">
     <li>
       <a @click="() => this.$router.push({ path: '/' })">Dashboard</a>
     </li>
@@ -43,7 +43,7 @@ li:last-child {
   margin-right: 10px;
 }
 
-li a {
+ul.menu li a {
   display: block;
   color: #fff;
   padding: 15px 17px;
@@ -51,8 +51,10 @@ li a {
   text-align: center;
 }
 
-li a:hover {
+ul.menu a:hover {
   background-color: var(--secondary-color);
   cursor: pointer;
+  color: #fff;
+
 }
 </style>
