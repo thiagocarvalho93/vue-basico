@@ -14,7 +14,7 @@ export const routes = [
     },
   },
   {
-    path: "/dashboard",
+    path: "/",
     name: "Dashboard",
     component: DashboardView,
     title: "Dashboard",
