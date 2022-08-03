@@ -5,18 +5,18 @@
     </li>
     <li>
       <a @click="() => this.$router.push({ path: '/controle-de-produtos' })"
-        >Produtos</a
+        >Products</a
       >
     </li>
     <li>
       <a
         @click="() => this.$router.push({ path: '/controle-de-clientes' })"
         to=""
-        >Clientes</a
+        >Clients</a
       >
     </li>
     <li>
-      <a @click="() => this.$router.push({ path: '/login' })">Sair</a>
+      <a @click="() => this.$router.push({ path: '/login' })">Logout</a>
     </li>
   </ul>
 </template>
