@@ -112,6 +112,8 @@
 <script>
 import Produto from "@/models/Produto";
 import ProdutoService from "@/services/produto-service";
+import produtoService from "@/services/produto-service";
+import conversorData from "@/utils/conversor-data";
 
 export default {
   name: "ProdutoView",
@@ -134,13 +136,18 @@ export default {
       const response = await ProdutoService.obterPorId(id);
       console.log(response);
       this.produto = response.data;
+      console.log(this.produto);
     },
 
     async cadastrarProduto() {
-      if (!this.produto.validarParaCadastro) {
-        alert("O nome do produto é obrigatório!");
-        return;
-      }
+      //if (!this.produto.validarParaCadastro()) {
+      //  alert("O nome do produto é obrigatório!");
+      //  return;
+      //}
+      this.produto.registerDate =
+        conversorData.aplicarMascaraISOEmFormatoAmericano(
+          this.produto.registerDate
+        );
 
       const response = await ProdutoService.cadastrar(this.produto);
       this.produto = new Produto();
@@ -152,7 +159,24 @@ export default {
       }
     },
 
-    atualizarProduto() {},
+    async atualizarProduto() {
+      //console.log(this.produto.validarParaAtualizar());
+
+      //if (!this.produto.validarParaAtualizar()) {
+      //  alert("O código e nome do produto são obrigatórios!");
+      //  return;
+      //}
+
+      this.produto.registerDate =
+        conversorData.aplicarMascaraISOEmFormatoAmericano(
+          this.produto.registerDate
+        );
+
+      const response = await produtoService.atualizar(this.produto);
+
+      console.log(response);
+      this.cancelarAcao();
+    },
 
     salvarProduto() {
       this.modoCadastro ? this.cadastrarProduto() : this.atualizarProduto();

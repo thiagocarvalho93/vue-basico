@@ -27,9 +27,9 @@ const cadastrar = async (produto) => {
   }
 };
 
-const atualizar = async (id, produto) => {
+const atualizar = async (produto) => {
   try {
-    const response = await api.put(`/produtos/${id}`, produto);
+    const response = await api.put(`/produtos/${produto.id}`, produto);
     return response;
   } catch (error) {
     return error.response;
