@@ -37,6 +37,26 @@ body {
   font-weight: 500;
 }
 
+/* Override */
+.btn-primary,
+.btn-primary:active,
+.btn-primary:focus,
+.btn-primary:focus-visible,
+.btn-primary:visited,
+.btn-primary:not(:disabled):not(.disabled):active {
+  color: #fff;
+  background-color: var(--primary-color);
+  border: var(--primary-color);
+  outline: none;
+  box-shadow: none;
+  min-width: 90px;
+}
+.btn-primary:hover {
+  color: #fff;
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
 hr {
   margin: 0;
 }

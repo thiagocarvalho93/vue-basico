@@ -34,8 +34,14 @@
               <td>{{ item.amount }}</td>
               <td>{{ item.registerDate | data }}</td>
               <td>
-                <i @click="editarProduto" class="fas fa-pen table-icon"></i>
-                <i @click="excluirProduto" class="fas fa-trash table-icon"></i>
+                <i
+                  @click="editarProduto(item)"
+                  class="fas fa-pen table-icon"
+                ></i>
+                <i
+                  @click="excluirProduto(item)"
+                  class="fas fa-trash table-icon"
+                ></i>
               </td>
             </tr>
           </tbody>
@@ -46,21 +52,24 @@
 </template>
 <script>
 import ButtonComponent from "@/components/Button/ButtonComponent.vue";
-import { obterTodos } from "@/services/produto-service";
+import ProdutoService from "@/services/produto-service";
 import Produto from "@/models/Produto";
 import { aplicarMascaraEmDataIso } from "@/utils/conversor-data";
 import conversorMonetario from "@/utils/conversor-monetario";
 
 export default {
   name: "ControleDeProdutos",
+
   data() {
     return {
       produtos: [],
     };
   },
+
   components: {
     ButtonComponent,
   },
+
   filters: {
     data(data) {
       return aplicarMascaraEmDataIso(data);
@@ -69,18 +78,21 @@ export default {
       return conversorMonetario.aplicarMascaraParaRealComPrefixo(valor);
     },
   },
+
   methods: {
     async obterTodosOsProdutos() {
-      const response = await obterTodos();
+      const response = await ProdutoService.obterTodos();
       this.produtos = response.data.map((p) => new Produto(p));
-      console.log(this.produtos);
     },
     adicionarProduto() {
       this.$router.push({ name: "NovoProduto" });
     },
-    editarProduto() {},
+    editarProduto(produto) {
+      this.$router.push({ name: "EditarProduto", params: { id: produto.id } });
+    },
     excluirProduto() {},
   },
+
   mounted() {
     this.obterTodosOsProdutos();
   },

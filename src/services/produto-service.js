@@ -1,6 +1,6 @@
 import api from "./api";
 
-export const obterTodos = async () => {
+const obterTodos = async () => {
   try {
     const response = await api.get("/produtos");
     return response;
@@ -9,7 +9,7 @@ export const obterTodos = async () => {
   }
 };
 
-export const obterPorId = async (id) => {
+const obterPorId = async (id) => {
   try {
     const response = await api.get(`/produtos/${id}`);
     return response;
@@ -18,7 +18,7 @@ export const obterPorId = async (id) => {
   }
 };
 
-export const cadastrar = async (produto) => {
+const cadastrar = async (produto) => {
   try {
     const response = await api.post(`/produtos`, produto);
     return response;
@@ -27,7 +27,7 @@ export const cadastrar = async (produto) => {
   }
 };
 
-export const atualizar = async (id, produto) => {
+const atualizar = async (id, produto) => {
   try {
     const response = await api.put(`/produtos/${id}`, produto);
     return response;
@@ -36,11 +36,19 @@ export const atualizar = async (id, produto) => {
   }
 };
 
-export const deletar = async (id) => {
+const deletar = async (id) => {
   try {
     const response = await api.delete(`/produtos/${id}`);
     return response;
   } catch (error) {
     return error.response;
   }
+};
+
+export default {
+  cadastrar,
+  atualizar,
+  deletar,
+  obterPorId,
+  obterTodos,
 };
