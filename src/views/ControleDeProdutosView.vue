@@ -56,6 +56,7 @@ import ProdutoService from "@/services/produto-service";
 import Produto from "@/models/Produto";
 import { aplicarMascaraEmDataIso } from "@/utils/conversor-data";
 import conversorMonetario from "@/utils/conversor-monetario";
+import produtoService from "@/services/produto-service";
 
 export default {
   name: "ControleDeProdutos",
@@ -80,9 +81,18 @@ export default {
   },
 
   methods: {
+    ordernarProdutos(a, b) {
+      return parseInt(a.id) < parseInt(b.id)
+        ? -1
+        : parseInt(a.id) > parseInt(b.id)
+        ? 1
+        : 0;
+    },
     async obterTodosOsProdutos() {
       const response = await ProdutoService.obterTodos();
-      this.produtos = response.data.map((p) => new Produto(p));
+      let produtos = response.data.map((p) => new Produto(p));
+
+      this.produtos = produtos.sort(this.ordernarProdutos).reverse();
     },
     adicionarProduto() {
       this.$router.push({ name: "NovoProduto" });
@@ -90,7 +100,22 @@ export default {
     editarProduto(produto) {
       this.$router.push({ name: "EditarProduto", params: { id: produto.id } });
     },
-    excluirProduto() {},
+    excluirProduto(produto) {
+      if (confirm(`Deseja excluir o produto ${produto.id}?`)) {
+        try {
+          produtoService.deletar(produto.id);
+          let indice = this.produtos.findIndex((p) => p.id == produto.id);
+
+          this.produtos.splice(indice, 1);
+
+          setTimeout(() => {
+            alert("Produto excluído com sucesso!");
+          }, 500);
+        } catch (error) {
+          alert(error);
+        }
+      }
+    },
   },
 
   mounted() {
