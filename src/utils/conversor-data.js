@@ -20,9 +20,10 @@ export const aplicarMascaraISOEmFormatoAmericano = (data) => {
 };
 
 export const aplicarMascaraFormatoAmericanoEmDataISO = (data) => {
-  if (!data) return "";
-
-  return moment(data).locale("pt-br").format("YYYY-MM-DD");
+  if (data) {
+    return moment(data).locale("pt-br").format("YYYY-MM-DD");
+  }
+  return undefined;
 };
 
 export default {

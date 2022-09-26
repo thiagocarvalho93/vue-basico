@@ -1,5 +1,5 @@
 import conversorData from "@/utils/conversor-data";
-export default class  Produto {
+export default class Produto {
   constructor(obj) {
     obj = obj || {};
 
@@ -9,7 +9,8 @@ export default class  Produto {
 
     this.amount = obj.amount || 0;
     this.registerDate =
-      obj.registerDate && conversorData.aplicarMascaraFormatoAmericanoEmDataISO(obj.registerDate);
+      obj.registerDate &&
+      conversorData.aplicarMascaraFormatoAmericanoEmDataISO(obj.registerDate);
   }
 
   validarParaCadastro() {

@@ -67,7 +67,6 @@
           />
         </div>
       </div>
-
       <div class="col-sm-12">
         <div class="form-group">
           <label for="obs">Obs</label>
@@ -135,15 +134,20 @@ export default {
     async obterProdutoPorId(id) {
       const response = await ProdutoService.obterPorId(id);
       console.log(response);
-      this.produto = response.data;
-      console.log(this.produto);
+
+      this.produto = new Produto(response.data);
     },
 
     async cadastrarProduto() {
-      //if (!this.produto.validarParaCadastro()) {
-      //  alert("O nome do produto é obrigatório!");
-      //  return;
-      //}
+      if (!this.produto.validarParaCadastro()) {
+        this.$swal({
+          icon: "error",
+          title: "Erro",
+          text: "Nome do produto é obrigatório!",
+          confirmButtonColor: "#6200ea",
+        });
+        return;
+      }
       this.produto.registerDate =
         conversorData.aplicarMascaraISOEmFormatoAmericano(
           this.produto.registerDate
@@ -151,7 +155,12 @@ export default {
 
       const response = await ProdutoService.cadastrar(this.produto);
       this.produto = new Produto();
-      alert("Produto adicionado com sucesso!");
+      this.$swal({
+        icon: "success",
+        title: "Sucesso",
+        text: "Produto cadastrado!",
+        confirmButtonColor: "#6200ea",
+      });
 
       console.log(response);
       if (!this.continuarAdicionando) {
@@ -160,21 +169,28 @@ export default {
     },
 
     async atualizarProduto() {
-      //console.log(this.produto.validarParaAtualizar());
+      console.log(this.produto);
 
-      //if (!this.produto.validarParaAtualizar()) {
-      //  alert("O código e nome do produto são obrigatórios!");
-      //  return;
-      //}
+      if (!this.produto.validarParaAtualizar()) {
+        this.$swal({
+          icon: "error",
+          title: "Erro",
+          text: "id e nome são obrigatórios!",
+          confirmButtonColor: "#6200ea",
+        });
+        return;
+      }
+      try {
+        this.produto.registerDate =
+          conversorData.aplicarMascaraISOEmFormatoAmericano(
+            this.produto.registerDate
+          );
+        const response = await produtoService.atualizar(this.produto);
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
 
-      this.produto.registerDate =
-        conversorData.aplicarMascaraISOEmFormatoAmericano(
-          this.produto.registerDate
-        );
-
-      const response = await produtoService.atualizar(this.produto);
-
-      console.log(response);
       this.cancelarAcao();
     },
 

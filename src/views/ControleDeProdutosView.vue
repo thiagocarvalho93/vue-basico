@@ -101,20 +101,42 @@ export default {
       this.$router.push({ name: "EditarProduto", params: { id: produto.id } });
     },
     excluirProduto(produto) {
-      if (confirm(`Deseja excluir o produto ${produto.id}?`)) {
-        try {
-          produtoService.deletar(produto.id);
-          let indice = this.produtos.findIndex((p) => p.id == produto.id);
+      this.$swal({
+        icon: "question",
+        title: "Excluir produto",
+        text: `Deseja excluir o produto ${produto.id} - ${produto.name}`,
+        showCancelButton: true,
+        confirmButtonText: "Sim",
+        confirmButtonColor: "#6200ea",
+        cancelButtonText: "Cancelar",
+        denyButtonText: `Don't save`,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          try {
+            produtoService.deletar(produto.id);
+            let indice = this.produtos.findIndex((p) => p.id == produto.id);
 
-          this.produtos.splice(indice, 1);
+            this.produtos.splice(indice, 1);
 
-          setTimeout(() => {
-            alert("Produto excluído com sucesso!");
-          }, 500);
-        } catch (error) {
-          alert(error);
+            setTimeout(() => {
+              this.$swal({
+                icon: "success",
+                title: "Sucesso",
+                text: "Produto excluido!",
+                confirmButtonColor: "#6200ea",
+              });
+            }, 500);
+          } catch (error) {
+            this.$swal({
+              icon: "error",
+              title: "Erro",
+              text: "Não foi possivel excluir o produto!",
+              confirmButtonColor: "#6200ea",
+            });
+          }
+          console.log("");
         }
-      }
+      });
     },
   },
 
